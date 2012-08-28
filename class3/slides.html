@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<!-- saved from url=(0067)http://www.teaching-materials.org/javascript/slides/objectsdom.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Intro to JavaScript: Objects &amp; the DOM</title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="./slides_files/normalize.css">
+<link rel="stylesheet" type="text/css" href="./slides_files/presentation.css">
+<link rel="stylesheet" type="text/css" href="./slides_files/prettify.css">
+<link href="./slides_files/css" rel="stylesheet" type="text/css">
+<script src="./slides_files/jquery.js" type="text/javascript"></script>
+<script src="./slides_files/fathom.js"></script>
+<script src="./slides_files/prettify.js"></script>
+<script>
+$(document).ready(function(){
+    $('pre').addClass('prettyprint').attr('tabIndex', 0);
+    prettyPrint();
+    
+    var fathom = $('#presentation').fathom({
+        onActivateSlide: function() {
+            var $slide = $(this);
+            $slide.find('pre:first').focus();
+        }
+    });
+});
+</script>
+<style type="text/css">@media print { #feedlyMiniIcon { display: none; } }</style></head>
+<body>
+
+<div id="presentation" style="white-space: nowrap; margin-top: -19px; ">
+  
+   <div id="presentation-counter"></div>
+      
+   <div id="slides">
+    <div class="slide normal activeslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; margin-left: 218px; "> 
+     <h1 class="center">JS Objects &amp; DOM</h1>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>Objects</h1></header> 
+     <section class="content"> 
+     <p>Objects are a data type that let us store a collection of properties and methods.</p>
+
+<pre style="border:3px dotted black;" class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> objectName </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> <br>&nbsp; propertyName</span><span class="pun">:</span><span class="pln"> propertyValue</span><span class="pun">,</span><span class="pln"><br>&nbsp; propertyName</span><span class="pun">:</span><span class="pln"> propertyValue</span><span class="pun">,</span><span class="pln"><br>&nbsp; </span><span class="pun">...</span><span class="pln"><br></span><span class="pun">};</span></pre>
+
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> aboutMe </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; hometown</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Pasadena, CA"</span><span class="pun">,</span><span class="pln"><br>&nbsp; hair</span><span class="pun">:</span><span class="pln"> </span><span class="str">"brown"</span><span class="pln"><br></span><span class="pun">};</span><span class="pln"> </span></pre>
+
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> lizzieTheCat </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; age</span><span class="pun">:</span><span class="pln"> </span><span class="lit">18</span><span class="pun">,</span><span class="pln"><br>&nbsp; furColor</span><span class="pun">:</span><span class="pln"> </span><span class="str">"grey"</span><span class="pun">,</span><span class="pln"><br>&nbsp; likes</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="str">"catnip"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"milk"</span><span class="pun">],</span><span class="pln"><br>&nbsp; birthday</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="str">"month"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">7</span><span class="pun">,</span><span class="pln"> </span><span class="str">"day"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">17</span><span class="pun">,</span><span class="pln"> year</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1994</span><span class="pun">}</span><span class="pln"><br></span><span class="pun">};</span></pre>
+
+<pre class="speaker-notes prettyprint" style="display: none;" tabindex="0"><span class="typ">Javascript</span><span class="pln"> has a more complex data type called an </span><span class="str">'object'</span><span class="pun">.</span><span class="pln"> </span><span class="typ">Objects</span><span class="pln"> allow us to describe an entity that has a complex structure</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">and</span><span class="pln"> more closely resembles something that exist </span><span class="kwd">in</span><span class="pln"> the real world</span><span class="pun">.</span><span class="pln"><br></span><span class="typ">Arrays</span><span class="pln"> </span><span class="kwd">and</span><span class="pln"> functions are both special types of objects </span><span class="kwd">in</span><span class="pln"> </span><span class="typ">Javascript</span><span class="pun">.</span><span class="pln"> </span><span class="typ">We</span><span class="pln"> can also define </span><span class="kwd">our</span><span class="pln"> own objects to represent complex data structures</span><span class="pun">.</span><span class="pln"><br></span><span class="typ">Just</span><span class="pln"> like objects </span><span class="kwd">in</span><span class="pln"> the real world</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Javascript</span><span class="pln"> objects have attributes </span><span class="pun">-</span><span class="pln"> called </span><span class="str">'properties'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">and</span><span class="pln"> things they can </span><span class="kwd">do</span><span class="pln"> </span><span class="pun">-</span><span class="pln"> called </span><span class="str">'methods'</span><span class="pun">.</span><span class="pln"> </span><span class="typ">For</span><span class="pln"> example</span><span class="pun">,</span><span class="pln"> we can create an </span><span class="kwd">object</span><span class="pln"> that represents a dog </span><span class="kwd">in</span><span class="pln"> </span><span class="typ">Javascript</span><span class="pun">.</span><span class="pln"> </span><span class="typ">It</span><span class="pln"> could have properties like </span><span class="str">'colour'</span><span class="pln"> </span><span class="kwd">and</span><span class="pln"> </span><span class="str">'breed'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">and</span><span class="pln"> methods like </span><span class="str">'bark'</span><span class="pln"> </span><span class="kwd">and</span><span class="pln"> </span><span class="str">'chaseCat'</span><span class="pun">.</span></pre>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>Objects Access</h1></header> 
+     <section class="content"> 
+     <p>Access properties using "dot notation":</p>
+
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> aboutMe </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; hometown</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Pasadena, CA"</span><span class="pun">,</span><span class="pln"><br>&nbsp; hair</span><span class="pun">:</span><span class="pln"> </span><span class="str">"brown"</span><span class="pln"><br></span><span class="pun">};</span><span class="pln"> <br><br></span><span class="kwd">var</span><span class="pln"> myHometown </span><span class="pun">=</span><span class="pln"> aboutMe</span><span class="pun">.</span><span class="pln">hometown</span><span class="pun">;</span></pre>
+
+<p>Or using "bracket notation" (like arrays):</p>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> myHair </span><span class="pun">=</span><span class="pln"> aboutMe</span><span class="pun">[</span><span class="str">"hair"</span><span class="pun">];</span></pre>
+<p>Non-existent properties will return undefined:</p>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> myGender </span><span class="pun">=</span><span class="pln"> aboutMe</span><span class="pun">[</span><span class="str">"gender"</span><span class="pun">];</span></pre>
+
+
+
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>Changing Objects</h1></header> 
+     <section class="content"> 
+     <p>Use dot or bracket notation with the assignment operator to change objects.</p>
+<p>Change existing properties:</p>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> aboutMe </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; hometown</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Pasadena, CA"</span><span class="pun">,</span><span class="pln"><br>&nbsp; hair</span><span class="pun">:</span><span class="pln"> </span><span class="str">"brown"</span><span class="pln"><br></span><span class="pun">};</span><span class="pln"> <br>aboutMe</span><span class="pun">.</span><span class="pln">hair </span><span class="pun">=</span><span class="pln"> </span><span class="str">"blue"</span><span class="pun">;</span></pre>
+<p>Or add new properties:</p>
+<pre class="prettyprint" tabindex="0"><span class="pln">aboutMe</span><span class="pun">.</span><span class="pln">gender </span><span class="pun">=</span><span class="pln"> </span><span class="str">"female"</span><span class="pun">;</span></pre>
+<p>You can also delete properties:</p>
+<pre class="prettyprint" tabindex="0"><span class="kwd">delete</span><span class="pln"> aboutMe</span><span class="pun">.</span><span class="pln">gender</span><span class="pun">;</span></pre>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>Arrays of Objects</h1></header> 
+     <section class="content"> 
+     <p>Since arrays can hold any data type, they can also hold objects:</p>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> myCats </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="pln"><br>&nbsp; </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Lizzie"</span><span class="pun">,</span><span class="pln"> <br>&nbsp; &nbsp;age</span><span class="pun">:</span><span class="pln"> </span><span class="lit">18</span><span class="pun">},</span><span class="pln"><br>&nbsp; </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">"Daemon"</span><span class="pun">,</span><span class="pln"><br>&nbsp; &nbsp;age</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">}</span><span class="pln"><br></span><span class="pun">];</span><span class="pln"><br><br></span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> myCats</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; </span><span class="kwd">var</span><span class="pln"> myCat </span><span class="pun">=</span><span class="pln"> myCats</span><span class="pun">[</span><span class="pln">i</span><span class="pun">];</span><span class="pln"><br>&nbsp; console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">myCat</span><span class="pun">.</span><span class="pln">name </span><span class="pun">+</span><span class="pln"> </span><span class="str">' is '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> myCat</span><span class="pun">.</span><span class="pln">age </span><span class="pun">+</span><span class="pln"> </span><span class="str">' years old.'</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">}</span></pre>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>Objects as Arguments</h1></header> 
+     <section class="content"> 
+     <p>Just like other data types, objects can be passed into functions:</p>
+
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> lizzieTheCat </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; age</span><span class="pun">:</span><span class="pln"> </span><span class="lit">18</span><span class="pun">,</span><span class="pln"><br>&nbsp; furColor</span><span class="pun">:</span><span class="pln"> </span><span class="str">"grey"</span><span class="pun">,</span><span class="pln"><br>&nbsp; likes</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="str">"catnip"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"milk"</span><span class="pun">],</span><span class="pln"><br>&nbsp; birthday</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="str">"month"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">7</span><span class="pun">,</span><span class="pln"> </span><span class="str">"day"</span><span class="pun">:</span><span class="pln"> </span><span class="lit">17</span><span class="pun">,</span><span class="pln"> year</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1994</span><span class="pun">}</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br><br></span><span class="kwd">function</span><span class="pln"> describeCat</span><span class="pun">(</span><span class="pln">cat</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">"This cat is "</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> cat</span><span class="pun">.</span><span class="pln">age </span><span class="pun">+</span><span class="pln"> </span><span class="str">" years old with "</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> cat</span><span class="pun">.</span><span class="pln">furColor </span><span class="pun">+</span><span class="pln"> </span><span class="str">" fur."</span><span class="pun">);</span><span class="pln"><br></span><span class="pun">}</span><span class="pln"><br><br>describeCat</span><span class="pun">(</span><span class="pln">lizzieTheCat</span><span class="pun">);</span></pre>
+     </section>
+    </div>
+    
+   
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <h1 class="center"><a target="_blank" href="http://www.teaching-materials.org/javascript/exercises/objects.html">Exercise Time!</a></h1>
+    </div>
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>Object methods</h1></header> 
+     <section class="content"> 
+     <p>Object properties can also be functions. Object functions are called "methods".</p>
+
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> lizzieTheCat </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; age</span><span class="pun">:</span><span class="pln"> </span><span class="lit">18</span><span class="pun">,</span><span class="pln"><br>&nbsp; furColor</span><span class="pun">:</span><span class="pln"> </span><span class="str">'grey'</span><span class="pun">,</span><span class="pln"><br>&nbsp; meow</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'meowww'</span><span class="pun">);</span><span class="pln"><br>&nbsp; </span><span class="pun">},</span><span class="pln"><br>&nbsp; eat</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">food</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'Yum, I love '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> food</span><span class="pun">);</span><span class="pln"> &nbsp;<br>&nbsp; </span><span class="pun">},</span><span class="pln"><br>&nbsp; sleep</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">numMinutes</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> numMinutes</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'z'</span><span class="pun">);</span><span class="pln"><br>&nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp; </span><span class="pun">}</span><span class="pln"><br></span><span class="pun">};</span></pre>
+<p>Call object methods using dot notation:</p>
+<pre class="prettyprint" tabindex="0"><span class="pln">lizzieTheCat</span><span class="pun">.</span><span class="pln">meow</span><span class="pun">();</span><span class="pln"><br>lizzieTheCat</span><span class="pun">.</span><span class="pln">eat</span><span class="pun">(</span><span class="str">'brown mushy stuff'</span><span class="pun">);</span><span class="pln"><br>lizzieTheCat</span><span class="pun">.</span><span class="pln">sleep</span><span class="pun">(</span><span class="lit">10</span><span class="pun">);</span></pre>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>Built-in Objects</h1></header> 
+     <section class="content"> 
+     <p>JS provides several built-in objects:</p>
+
+<ul>
+  <li><code><a target="_blank" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array">Array</a></code>
+  </li><li><code><a target="_blank" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+  </li><li><code><a target="_blank" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number">Number</a></code>
+  </li><li><code><a target="_blank" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String">String</a></code>
+  </li><li><code><a target="_blank" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
+  </li><li><code><a target="_blank" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date">Date</a></code>
+  </li><li><code><a target="_blank" href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math">Math</a></code>
+</li></ul>
+     </section>
+    </div>
+    
+   
+    
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>HTML Editors</h1></header> 
+     <section class="content"> 
+     <section class="content"> 
+     <p>Since HTML files are just text files, many programs can be used to create them. Some programs provide special assistance for handling HTML, like syntax-highlighting or autocompletion. 
+</p>
+<table style="font-size:120%; border: 1px solid black;" border="1" cellspacing="0">
+ <thead>
+  <tr><th></th><th>Windows</th><th>Mac</th><th>Online</th></tr>
+ </thead>
+  <tbody>
+  <tr><td>Free</td>
+        <td><a href="http://notepad-plus-plus.org/">Notepad++</a></td>
+       <td><a href="http://www.barebones.com/products/textwrangler/">TextWrangler</a>, <a href="http://smultron.sourceforge.net/">Smultron</a></td>
+       <td rowspan="2"> <a href="http://c9.io/">Cloud9 IDE</a>, <a href="http://jsbin.com/3/">JSBin</a></td>
+  </tr>
+  <tr><td>$$</td>
+       <td><a href="http://www.e-texteditor.com/">E-Text Editor</a></td>
+       <td><a href="http://macromates.com/">TextMate</a>, <a href="http://www.panic.com/coda/">Coda</a>, <a href="http://macrabbit.com/espresso/">Espresso</a></td></tr>
+  </tbody>
+</table>
+
+<p>
+</p><center>
+<img style="height:200px" src="./slides_files/4931311586_4f770d82e1.jpg">
+</center>
+<p></p>
+     </section>
+    </section></div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>HTML &amp; CSS: Review</h1></header> 
+     <section class="content"> 
+     <img src="./slides_files/_o-7fu6impc_.png" style="float:right; border:1px solid black; margin-left: 10px;">
+<pre class="prettyprint lang-html" style="font-size: 17px; line-height:1.2em;" tabindex="0"><span class="dec">&lt;!doctype html&gt;</span><span class="pln"><br></span><span class="tag">&lt;html&gt;</span><span class="pln"><br>&nbsp;</span><span class="tag">&lt;head&gt;</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;meta</span><span class="pln"> </span><span class="atn">charset</span><span class="pun">=</span><span class="atv">"utf-8"</span><span class="tag">&gt;</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;title&gt;</span><span class="pln">All About Cats</span><span class="tag">&lt;/title&gt;</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;style</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/css"</span><span class="tag">&gt;</span><span class="pln"><br>&nbsp; &nbsp;h1 </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp;color</span><span class="pun">:</span><span class="pln"> red</span><span class="pun">;</span><span class="pln"> <br>&nbsp; &nbsp;</span><span class="pun">}</span><span class="pln"><br>&nbsp; </span><span class="com">#mainpicture {</span><span class="pln"><br>&nbsp; &nbsp; border</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1px</span><span class="pln"> solid black</span><span class="pun">;</span><span class="pln"><br>&nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp; </span><span class="pun">.</span><span class="pln">catname </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; font</span><span class="pun">-</span><span class="pln">weight</span><span class="pun">:</span><span class="pln"> bold</span><span class="pun">;</span><span class="pln"><br>&nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;/style&gt;</span><span class="pln"> &nbsp; &nbsp; <br>&nbsp;</span><span class="tag">&lt;/head&gt;</span><span class="pln"><br>&nbsp;</span><span class="tag">&lt;body&gt;</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;h1&gt;</span><span class="pln">CATS!</span><span class="tag">&lt;/h1&gt;</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;img</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"mainpicture"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://placekitten.com/200/300"</span><span class="tag">&gt;</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;p&gt;</span><span class="pln">So cute!</span><span class="tag">&lt;/p&gt;</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;ul&gt;</span><span class="pln"><br>&nbsp; &nbsp;</span><span class="tag">&lt;li</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"catname"</span><span class="tag">&gt;</span><span class="pln">Lizzie</span><span class="tag">&lt;/li&gt;</span><span class="pln"><br>&nbsp; &nbsp;</span><span class="tag">&lt;li</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"catname"</span><span class="tag">&gt;</span><span class="pln">Daemon</span><span class="tag">&lt;/li&gt;</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;/ul&gt;</span><span class="pln"><br>&nbsp;</span><span class="tag">&lt;/body&gt;</span><span class="pln"><br></span><span class="tag">&lt;/html&gt;</span></pre>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>JS in HTML</h1></header> 
+     <section class="content"> 
+     <p>You can put JS inside a <code>script</code> tag (commonly at bottom of the page):</p>
+
+<pre class="prettyprint lang-html" tabindex="0"><span class="pln">&nbsp; ...<br>&nbsp; </span><span class="tag">&lt;script&gt;</span><span class="pln"><br>&nbsp; console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'IM ON A WEBPAGE!'</span><span class="pun">);</span><span class="pln"><br>&nbsp; </span><span class="tag">&lt;/script&gt;</span><span class="pln"><br>&nbsp;</span><span class="tag">&lt;/body&gt;</span><span class="pln"><br></span><span class="tag">&lt;/html&gt;</span></pre>
+
+<p>You can also put JS in an external file and reference it:</p>
+
+<pre class="prettyprint lang-html" tabindex="0"><span class="pln">&nbsp; ...<br>&nbsp; </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"app.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln"> <br>&nbsp;</span><span class="tag">&lt;/body&gt;</span><span class="pln"><br></span><span class="tag">&lt;/html&gt;</span></pre>
+     </section>
+    </div>
+  
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>The DOM Tree</h1></header> 
+     <section class="content"> 
+     <p>For <a href="http://www.teaching-materials.org/javascript/inclass/allaboutcats.html">this page</a>:</p>
+     <center><img src="./slides_files/2dvqiz-0w2cx.png"></center>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>DOM Inspecting</h1></header> 
+     <section class="content"> 
+     <ul>
+       <li><a href="https://developers.google.com/chrome-developer-tools/docs/elements">Chrome</a>: Right-click -&gt; "Inspect Element"
+       </li><li><a href="https://developer.mozilla.org/en/Tools/Inspector">Firefox</a>: Right-click -&gt; "Inspect Element" -&gt; "HTML"
+       </li><li><a href="http://msdn.microsoft.com/en-us/library/dd565628%28VS.85%29.aspx#html_elementinfo">IE</a>: Open Tools -&gt; Developer Tools
+      </li></ul>
+      <p>Chrome: <br>
+      <img src="./slides_files/screenshot_chromedevtools.png" style="border:1px solid black;">
+      </p>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>DOM Access</h1></header> 
+     <section class="content"> 
+     <p>On every webpage, the <code><a href="https://developer.mozilla.org/en/DOM/document">document</a></code> object gives us ways of accessing and changing the DOM.
+</p>
+<p>Every DOM "node" has properties that let us traverse the DOM like a tree: <code>parentNode</code>,
+<code>childNodes</code>, <code>firstChild</code>, <code>prevSibling</code>, <code>nextSibling</code>.
+</p>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> bodyNode </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">;</span><span class="pln"><br></span><span class="kwd">var</span><span class="pln"> htmlNode </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">parentNode</span><span class="pun">;</span><span class="pln"><br></span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">childNodes</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; </span><span class="kwd">var</span><span class="pln"> childNode </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">childNodes</span><span class="pun">[</span><span class="pln">i</span><span class="pun">];</span><span class="pln"><br></span><span class="pun">}</span></pre>
+
+
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>DOM Access: Easier</h1></header> 
+     <section class="content"> 
+     <p>The <code>document</code> object also provides methods for finding DOM nodes without traversing:</p>
+
+<pre style="border:3px dotted black;" class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="pln">id</span><span class="pun">);</span></pre>
+
+<pre class="prettyprint" tabindex="0"><span class="tag">&lt;img</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"mainpicture"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://placekitten.com/200/300"</span><span class="tag">&gt;</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> img </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'mainpicture'</span><span class="pun">);</span></pre>
+<br>
+<pre style="border:3px dotted black;" class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">getElementsByTagName</span><span class="pun">(</span><span class="pln">tagName</span><span class="pun">);</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="tag">&lt;li</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"catname"</span><span class="tag">&gt;</span><span class="pln">Lizzie</span><span class="tag">&lt;/li&gt;</span><span class="pln"><br></span><span class="tag">&lt;li</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"catname"</span><span class="tag">&gt;</span><span class="pln">Daemon</span><span class="tag">&lt;/li&gt;</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> listItems </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementsByTagName</span><span class="pun">(</span><span class="str">'li'</span><span class="pun">);</span><span class="pln"><br></span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> i </span><span class="pun">=</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> listItems</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; </span><span class="kwd">var</span><span class="pln"> listItem </span><span class="pun">=</span><span class="pln"> listItems</span><span class="pun">[</span><span class="pln">i</span><span class="pun">];</span><span class="pln"><br></span><span class="pun">}</span></pre>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>DOM Access: HTML5</h1></header> 
+     <section class="content"> 
+     <p>The HTML5 spec includes a few even more convenient methods.</p>
+
+<p>Available in <a href="http://caniuse.com/#search=getElementsByClassName">IE9+, FF3.6+, Chrome 17+, Safari 5+</a>:</p>
+<pre style="border:3px dotted black;" class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">getElementsByClassName</span><span class="pun">(</span><span class="pln">className</span><span class="pun">);</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> catNames </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementsByClassName</span><span class="pun">(</span><span class="str">'catname'</span><span class="pun">);</span><span class="pln"><br></span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> i </span><span class="pun">=</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> catNames</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"><br>&nbsp; </span><span class="kwd">var</span><span class="pln"> catName </span><span class="pun">=</span><span class="pln"> catNames</span><span class="pun">[</span><span class="pln">i</span><span class="pun">];</span><span class="pln"><br></span><span class="pun">}</span></pre>
+<br>
+<p>Available in <a href="http://caniuse.com/#search=querySelectorAll">IE8+, FF3.6+, Chrome 17+, Safari 5+</a>:</p>
+<pre style="border:3px dotted black;" class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">querySelector</span><span class="pun">(</span><span class="pln">cssQuery</span><span class="pun">);</span><span class="pln"><br>document</span><span class="pun">.</span><span class="pln">querySelectorAll</span><span class="pun">(</span><span class="pln">cssQuery</span><span class="pun">);</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> catNames </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">querySelectorAll</span><span class="pun">(</span><span class="str">'ul li.catname'</span><span class="pun">);</span></pre>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>DOM Nodes: Attributes</h1></header> 
+     <section class="content"> 
+     <p>You can access and change attributes of DOM nodes using dot notation:</p>
+<pre class="prettyprint" tabindex="0"><span class="tag">&lt;img</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"mainpicture"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://placekitten.com/200/300"</span><span class="tag">&gt;</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> img </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'mainpicture'</span><span class="pun">);</span><span class="pln"><br></span><span class="kwd">var</span><span class="pln"> oldSrc </span><span class="pun">=</span><span class="pln"> img</span><span class="pun">.</span><span class="pln">src</span><span class="pun">;</span><span class="pln"><br>img</span><span class="pun">.</span><span class="pln">src </span><span class="pun">=</span><span class="pln"> </span><span class="str">'http://placekitten.com/100/500'</span><span class="pun">;</span></pre>
+<p>Or <code>getAttribute</code>/<code>setAttribute</code>:</p>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> oldSrc </span><span class="pun">=</span><span class="pln"> img</span><span class="pun">.</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'src'</span><span class="pun">);</span><span class="pln"><br>img</span><span class="pun">.</span><span class="pln">setAttribute</span><span class="pun">(</span><span class="str">'src'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'http://placekitten.com/100/500'</span><span class="pun">);</span></pre>
+<br>
+<p>To set class, use the property <code>className</code>:</p>
+<pre class="prettyprint" tabindex="0"><span class="pln">img</span><span class="pun">.</span><span class="pln">className </span><span class="pun">=</span><span class="pln"> </span><span class="str">"picture"</span><span class="pun">;</span></pre>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>DOM Nodes: Styles</h1></header> 
+     <section class="content"> 
+     <p>You can change styles on DOM nodes via the <code>style</code> property:</p>
+
+<pre class="prettyprint" tabindex="0"><span class="pln">body </span><span class="pun">{</span><span class="pln"><br>&nbsp; color</span><span class="pun">:</span><span class="pln"> red</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">style</span><span class="pun">.</span><span class="pln">color </span><span class="pun">=</span><span class="pln"> </span><span class="str">'red'</span><span class="pun">;</span></pre>
+<br>
+<p>CSS property names with a "-" must be camelCased and number properties must have a unit:</p>
+<pre class="prettyprint" tabindex="0"><span class="pln">body </span><span class="pun">{</span><span class="pln"><br>&nbsp; background</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> pink</span><span class="pun">;</span><span class="pln"><br>&nbsp; padding</span><span class="pun">-</span><span class="pln">top</span><span class="pun">:</span><span class="pln"> </span><span class="lit">10px</span><span class="pun">;</span><span class="pln"><br></span><span class="pun">}</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">style</span><span class="pun">.</span><span class="pln">backgroundColor </span><span class="pun">=</span><span class="pln"> </span><span class="str">'pink'</span><span class="pun">;</span><span class="pln"><br>document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">style</span><span class="pun">.</span><span class="pln">paddingTop </span><span class="pun">=</span><span class="pln"> </span><span class="str">'10px'</span><span class="pun">;</span></pre>
+
+<p style="display:none;">
+You can also set CSS properties through a special style attribute on every DOM node.  logo.style.display = 'none' This immediately makes the logo disappear. Notes:Some property names must be adapted to become valid JavaScript identifiers, e.g. margin-top becomes marginTop and class becomes className.
+Number-like properties must be set using proper CSS syntax with their units, e.g. logo.style.marginTop='10px', not just a plain number.
+</p>
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>DOM innerHTML</h1></header> 
+     <section class="content"> 
+     <p>Each DOM node has an <code>innerHTML</code> property with the HTML of all its children:</p>
+<pre class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">innerHTML</span><span class="pun">;</span></pre>
+<p>You can set <code>innerHTML</code> yourself to change the contents of the node:</p>
+<pre class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">innerHTML </span><span class="pun">=</span><span class="pln"> </span><span class="str">"&lt;h1&gt;Oh Noes!&lt;/h1&gt; &lt;p&gt;I just changed the whole page!&lt;/p&gt;"</span></pre>
+<p>You can also just add to the <code>innerHTML</code> instead of replace:</p>
+<pre class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">innerHTML </span><span class="pun">+=</span><span class="pln"> </span><span class="str">"...just adding this bit at the end of the page."</span><span class="pun">;</span></pre>
+
+<p style="display:none;">Every node in the DOM tree has an innerHTML attribute that contains all of its children serialized back into HTML format. var nav = header.nextSibling.nextSibling;var oldNavHTML = nav.innerHTML;var oldHeaderHTML = header.innerHTML; You can also set the innerHTML attribute to replace the contents of any node. 
+
+     </p></section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 162px; "> 
+     <header><h1>DOM Modifying</h1></header> 
+     <section class="content"> 
+     <p>The <code>document</code> object also provides ways to create nodes from scratch:</p>
+<pre style="border:3px dotted black;" class="prettyprint" tabindex="0"><span class="pln">document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="pln">tagName</span><span class="pun">);</span><span class="pln"><br>document</span><span class="pun">.</span><span class="pln">createTextNode</span><span class="pun">(</span><span class="pln">text</span><span class="pun">);</span><span class="pln"><br>document</span><span class="pun">.</span><span class="pln">appendChild</span><span class="pun">();</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> newImg </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'img'</span><span class="pun">);</span><span class="pln"><br>newImg</span><span class="pun">.</span><span class="pln">src </span><span class="pun">=</span><span class="pln"> </span><span class="str">'http://placekitten.com/400/300'</span><span class="pun">;</span><span class="pln"><br>newImg</span><span class="pun">.</span><span class="pln">style</span><span class="pun">.</span><span class="pln">border </span><span class="pun">=</span><span class="pln"> </span><span class="str">'1px solid black'</span><span class="pun">;</span><span class="pln"><br>document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">appendChild</span><span class="pun">(</span><span class="pln">newImg</span><span class="pun">);</span></pre>
+<pre class="prettyprint" tabindex="0"><span class="kwd">var</span><span class="pln"> newParagraph </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'p'</span><span class="pun">);</span><span class="pln"><br></span><span class="kwd">var</span><span class="pln"> paragraphText </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">createTextNode</span><span class="pun">(</span><span class="str">'Squee!'</span><span class="pun">);</span><span class="pln"><br>newParagraph</span><span class="pun">.</span><span class="pln">appendChild</span><span class="pun">(</span><span class="pln">paragraphText</span><span class="pun">);</span><span class="pln"><br>document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">appendChild</span><span class="pun">(</span><span class="pln">newParagraph</span><span class="pun">);</span></pre>
+
+     </section>
+    </div>
+    
+   
+    
+    
+    
+    <div class="slide normal inactiveslide" style="white-space: normal; display: inline-block; vertical-align: top; margin-right: 218px; "> 
+     <h1 class="center"><a target="_blank" href="http://www.teaching-materials.org/javascript/exercises/dom.html">Exercise Time!</a></h1>
+    </div>
+
+
+   </div>
+
+ 
+</div><img id="feedlyMiniIcon" title="feedly mini" style="position: fixed; bottom: 14px; right: 14px; z-index: 99; cursor: pointer; border: 0px; -webkit-transition: opacity 0.3s ease; visibility: visible; width: 24px; height: 24px; max-height: 24px; max-width: 24px; overflow: hidden; display: block; padding: 0px; opacity: 0.35; " width="24" height="24" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYlJREFUeNrMVD1rwlAUPfkwBBxFKQQlDhmjqzj4F9w7FfwThZaW9n8UnDrrn1BEXNTBRQQhEE1ERRR0Sd990A7VaKJJ6YHzEu4N99z3zrsRGo2GAuCF8YFRQzSwGOuM7zJb3hgfES2o0SdGSWRLDfGhRgLpGAXS4q0VCoUCBEHwzd8skM/nUSqVoCjKybz8O1CtVn2LeZ4H27YxnU6xXC6x3+95PJPJoFKpoN1uY7vdnhfww3w+x3A4xGaz4d3quo5sNvuTTyaTXKTb7cJ13csCzWbzKKaqKj/zXC4HSZKO8iRcLpcxGAwwmUzC7UDTNBSLRSQSiVAeyUGNpM4v4XA4oNfr8eMMLJBKpWCaJn9fLBawLAur1Qq73Y6b/H0pyNyrTDYMA7PZDKPRCOv1+uQ3ZCqZe9UcOI6DTqfjW5zMbLVa3Bu6RaE9GI/HZ/P9fp8/qfipYROj+ukEnuQgEx0GImKGHGSC//UO/kTAibG+QwIfMQrUyeRXusaM94x3ERW2GT8Zn78EGACRmoKUJhB1TQAAAABJRU5ErkJggg=="></body></html>

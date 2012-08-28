@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)http://www.teaching-materials.org/javascript/exercises/calculator.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>JavaScript 1: The Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+  <style type="text/css">@media print { #feedlyMiniIcon { display: none; } }</style></head>
+ <body>
+<div class="container">
+
+<h2 class="page-header">The Calculator</h2>
+
+<p><em>  </em></p>
+<ul>
+ <li>Write a function called <code>squareNumber</code> that will take one argument (a number),
+ square that number, and return the result. It should also log a string like "The result of squaring the number 3 is 9."
+ </li><li>Write a function called <code>halfNumber</code> that will take one argument (a number),
+ divide it by 2, and return the result. It should also log a string like "Half of  5 is 2.5.".
+ </li><li>Write a function called <code>percentOf</code> that will take two numbers, figure out what percent the
+ first number represents of the second number, and return the result. It should also log a string like "2 is 50% of 4."
+ </li><li>Write a function called <code>areaOfCircle</code> that will take one argument (the radius), calculate the area based on that,
+ and return the result. It should also log a string like "The area for a circle with radius 2 is 12.566370614359172."
+  <ul><li>Bonus: Round the result so there are only two digits after the decimal.</li></ul>
+ </li><li>Write a function that will take one argument (a number) and perform the following operations, using the functions
+ you wrote earlier1:
+      <ol>
+       <li>Take half of the number and store the result.
+       </li><li>Square the result of #1 and store that result.
+       </li><li>Calculate the area of a circle with the result of #2 as the radius.
+       </li><li>Calculate what percentage that area is of the squared result (#3).
+      </li></ol>
+</li></ul>
+<button class="btn" style="display:block;" onclick="showSolution(1)">See Solution</button>
+<br><br>
+<pre id="solution1" style="display:none;">function squareNumber(num) {
+    var squaredNumber = num * num;
+    console.log('The result of squaring the number ' + num + ' is ' + squaredNumber);
+    return squaredNumber;
+}
+
+squareNumber(3);
+
+function halfOf(num) {
+    var half = num / 2;
+    console.log('Half of ' + num + ' is ' +  half);
+    return half;
+}
+
+halfOf(5);
+
+function percentOf(num1, num2) {
+    var percent = (num1/num2) * 100;
+    console.log(num1 + ' is ' + percent + '% of ' + num2);
+    return percent;
+}
+
+percentOf(5, 10);
+
+function areaOfCircle(radius) {
+    var area = Math.PI * squareNumber(radius);
+    console.log('The area of circle with radius ' + radius + ' is ' + area);
+    return area;
+}
+
+areaOfCircle(2);
+
+function doCrazyStuff(num) {
+    var half    = halfOf(num);
+    var squared = squareNumber(half);
+    var area    = areaOfCircle(squared);
+    var result  = percentOf(squared, area);
+}
+
+doCrazyStuff(5);
+</pre>
+
+  <script>
+
+function showSolution(num) {
+  if (confirm('You surrrrre?')) {
+    document.getElementById('solution' + num).style.display = 'block';
+  }
+}
+  </script>
+  
+</div><img id="feedlyMiniIcon" title="feedly mini" style="position: fixed; bottom: 14px; right: 14px; z-index: 99; cursor: pointer; border: 0px; -webkit-transition: opacity 0.3s ease; visibility: visible; width: 24px; height: 24px; max-height: 24px; max-width: 24px; overflow: hidden; display: block; padding: 0px; opacity: 0.35; " width="24" height="24" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYlJREFUeNrMVD1rwlAUPfkwBBxFKQQlDhmjqzj4F9w7FfwThZaW9n8UnDrrn1BEXNTBRQQhEE1ERRR0Sd990A7VaKJJ6YHzEu4N99z3zrsRGo2GAuCF8YFRQzSwGOuM7zJb3hgfES2o0SdGSWRLDfGhRgLpGAXS4q0VCoUCBEHwzd8skM/nUSqVoCjKybz8O1CtVn2LeZ4H27YxnU6xXC6x3+95PJPJoFKpoN1uY7vdnhfww3w+x3A4xGaz4d3quo5sNvuTTyaTXKTb7cJ13csCzWbzKKaqKj/zXC4HSZKO8iRcLpcxGAwwmUzC7UDTNBSLRSQSiVAeyUGNpM4v4XA4oNfr8eMMLJBKpWCaJn9fLBawLAur1Qq73Y6b/H0pyNyrTDYMA7PZDKPRCOv1+uQ3ZCqZe9UcOI6DTqfjW5zMbLVa3Bu6RaE9GI/HZ/P9fp8/qfipYROj+ukEnuQgEx0GImKGHGSC//UO/kTAibG+QwIfMQrUyeRXusaM94x3ERW2GT8Zn78EGACRmoKUJhB1TQAAAABJRU5ErkJggg=="></body></html>

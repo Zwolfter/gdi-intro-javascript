@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)http://www.teaching-materials.org/javascript/exercises/forloops.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>JavaScript 1: for loops</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+  <style type="text/css">@media print { #feedlyMiniIcon { display: none; } }</style></head>
+ <body>
+<div class="container">
+<h2>Exercises: for loops</h2>
+
+<h3 class="page-header">The even/odd reporter</h3>
+<p>Write a for loop that will iterate from 0 to 20. For each iteration, it will
+ check if the current number is even or odd, and report that to the screen (e.g. "2 is even").
+</p>
+<button class="btn" onclick="showSolution(1)">See Solution</button>
+<br><br>
+<pre id="solution1" style="display:none;">for (var i = 0; i &lt;= 20; i++) {
+    if (i % 2 === 0) {
+        console.log(i + ' is even');
+    } else {
+        console.log(i + ' is odd');
+    }
+}
+</pre>
+
+
+<h3 class="page-header">Multiplication Tables</h3>
+<p>Write a for loop that will iterate from 0 to 10. For each iteration of the for loop,
+it will multiply the number by 9 and log the result (e.g. "2 * 9 = 18").
+</p>
+<p><b>Bonus:</b> Use a nested for loop to show the tables for every multiplier from
+1 to 10 (100 results total).
+</p>
+
+<button class="btn" onclick="showSolution(2)">See Solution</button>
+<br><br>
+<pre id="solution2" style="display:none;">// Multiplication tables
+var multiplier = 9;
+for (var i = 0; i &lt;= 10; i++) {
+    var result = multiplier * i;
+    console.log(multiplier + ' * ' + i + ' = ' + result);
+}
+
+
+for (var multiplier = 0; multiplier &lt;= 10; multiplier++) {
+ for (var i = 0; i &lt;= 10; i++) {
+   var result = multiplier * i;
+   console.log(multiplier + ' * ' + i + ' = ' + result);
+ }
+}
+</pre>
+
+<h3 class="page-header">The Grade Assigner</h3>
+
+<p>Check the results of <code>assignGrade</code> function from the <a href="http://www.teaching-materials.org/javascript/exercises/ifelse.html">conditionals exercise</a> for every value from 60 to 100 -
+so your log should show "For 89, you got a B. For 90, you got an A.", etc.
+</p>
+<button class="btn" onclick="showSolution(3)">See Solution</button>
+<pre id="solution3" style="display:none;">function assignGrade(score) {
+    if (score &gt; 90) {
+        return 'A';
+    } else if (score &gt; 80) {
+        return 'B';
+    } else if (score &gt; 70) {
+        return 'C';
+    } else if (score &gt; 65) {
+        return 'D';
+    } else {
+        return 'F';
+    }
+}
+
+for (var i = 80; i &lt;= 100; i++) {
+  console.log('For ' + i + ', you got a ' + assignGrade(i));
+}
+</pre>
+
+  <br><br><br><br><br>
+  
+ </div>
+
+  <script>
+
+function showSolution(num) {
+  if (confirm('You surrrrre?')) {
+    document.getElementById('solution' + num).style.display = 'block';
+  }
+}
+  </script>
+  
+<img id="feedlyMiniIcon" title="feedly mini" style="position: fixed; bottom: 14px; right: 14px; z-index: 99; cursor: pointer; border: 0px; -webkit-transition: opacity 0.3s ease; visibility: visible; width: 24px; height: 24px; max-height: 24px; max-width: 24px; overflow: hidden; display: block; padding: 0px; opacity: 0.35; " width="24" height="24" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYlJREFUeNrMVD1rwlAUPfkwBBxFKQQlDhmjqzj4F9w7FfwThZaW9n8UnDrrn1BEXNTBRQQhEE1ERRR0Sd990A7VaKJJ6YHzEu4N99z3zrsRGo2GAuCF8YFRQzSwGOuM7zJb3hgfES2o0SdGSWRLDfGhRgLpGAXS4q0VCoUCBEHwzd8skM/nUSqVoCjKybz8O1CtVn2LeZ4H27YxnU6xXC6x3+95PJPJoFKpoN1uY7vdnhfww3w+x3A4xGaz4d3quo5sNvuTTyaTXKTb7cJ13csCzWbzKKaqKj/zXC4HSZKO8iRcLpcxGAwwmUzC7UDTNBSLRSQSiVAeyUGNpM4v4XA4oNfr8eMMLJBKpWCaJn9fLBawLAur1Qq73Y6b/H0pyNyrTDYMA7PZDKPRCOv1+uQ3ZCqZe9UcOI6DTqfjW5zMbLVa3Bu6RaE9GI/HZ/P9fp8/qfipYROj+ukEnuQgEx0GImKGHGSC//UO/kTAibG+QwIfMQrUyeRXusaM94x3ERW2GT8Zn78EGACRmoKUJhB1TQAAAABJRU5ErkJggg=="></body></html>

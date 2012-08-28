@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- saved from url=(0071)http://www.teaching-materials.org/javascript/exercises/wordguesser.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Homework: The Word Guesser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+  <style type="text/css">@media print { #feedlyMiniIcon { display: none; } }</style></head>
+ <body>
+<div class="container">
+<h2>Homework: The Word Guesser</h2>
+
+<p>You'll create a simple word guessing game where the user gets infinite tries
+to guess the word (like Hangman without the hangman, or like Wheel of Fortune without the wheel and fortune).
+</p>
+<ul>
+  <li>Create two global arrays: one to hold the letters of the word (e.g. 'F', 'O', 'X'), and one to hold the current guessed letters (e.g. it would start with '_', '_', '_' and end with 'F', 'O', 'X').
+  </li><li>Write a function called <code>guessLetter</code> that will:
+    <ul>
+     <li>Take one argument, the guessed letter.
+     </li><li>Iterate through the word letters and see if the guessed letter is in there.
+     </li><li>If the guessed letter matches a word letter, changed the guessed letters array to reflect that.
+     </li><li>When it's done iterating, it should log the current guessed letters ('F__')
+     </li><li>and congratulate the user if they found a new letter.
+     </li><li>It should also figure out if there are any more letters that need to be guessed,
+     </li><li>and if not, it should congratulate the user for winning the game.
+    </li></ul>
+  </li><li>Pretend you don't know the word, and call <code>guessLetter</code> multiple times with various letters to check that your program works.
+  </li><li><b>Bonus:</b> Make it more like Wheel of Fortune: 
+    <ul>
+      <li>Start with a reward amount of $0
+      </li><li>Every time a letter is guessed, generate a random amount and reward the user if they found a letter (multiplying the reward if multiple letters found), otherwise subtract from their reward.
+      </li><li>When they guess the word, log their final reward amount.
+    </li></ul>
+  </li><li><b>Bonus:</b> Make it like Hangman:
+    <ul>
+      <li>Keep track of all the guessed letters (right and wrong) and only let the user guess a letter once. If they guess a letter twice, do nothing.
+      </li><li>Keep track of the state of the hangman as a number (starting at 0), and subtract or add to that number every time they make a wrong guess.
+      </li><li>Once the number reaches 6 (a reasonable number of body parts for a hangman), inform the user that they lost and
+      show a hangman on the log.
+    </li></ul>
+</li></ul>
+
+<button class="btn" onclick="showSolution(1)" style="display:n0ne;">See Solution</button>
+<br><br>
+<pre id="solution1" style="display:none;">var wordLetters     = ['G', 'O', 'A', 'T'];
+var guessedLetters  = ['_', '_', '_', '_'];
+
+function guessLetter(letter) {
+    var goodGuess = false;
+    var moreToGuess = false;
+    for (var i = 0; i &lt; wordLetters.length; i++) {
+        if (wordLetters[i] == letter) {
+            guessedLetters[i] = letter;
+            goodGuess = true;
+        }
+        if (guessedLetters[i] == '_') {
+            moreToGuess = true;
+        }
+    }
+    if (goodGuess) {
+        console.log('Yay, you found a letter!');
+        console.log(guessedLetters.join(''));
+        if (!moreToGuess) {
+            console.log('YOU WON!');
+        } 
+    } else {
+        console.log('Oh noes, thats not right!');
+    }
+}
+
+guessLetter('G');
+guessLetter('I');
+guessLetter('O');
+guessLetter('A');
+guessLetter('T');
+</pre>
+
+
+  <br><br><br><br><br>
+  
+ </div>
+
+  <script>
+
+function showSolution(num) {
+  if (confirm('You surrrrre?')) {
+    document.getElementById('solution' + num).style.display = 'block';
+  }
+}
+  </script>
+  
+<img id="feedlyMiniIcon" title="feedly mini" style="position: fixed; bottom: 14px; right: 14px; z-index: 99; cursor: pointer; border: 0px; -webkit-transition: opacity 0.3s ease; visibility: visible; width: 24px; height: 24px; max-height: 24px; max-width: 24px; overflow: hidden; display: block; padding: 0px; opacity: 0.35; " width="24" height="24" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYlJREFUeNrMVD1rwlAUPfkwBBxFKQQlDhmjqzj4F9w7FfwThZaW9n8UnDrrn1BEXNTBRQQhEE1ERRR0Sd990A7VaKJJ6YHzEu4N99z3zrsRGo2GAuCF8YFRQzSwGOuM7zJb3hgfES2o0SdGSWRLDfGhRgLpGAXS4q0VCoUCBEHwzd8skM/nUSqVoCjKybz8O1CtVn2LeZ4H27YxnU6xXC6x3+95PJPJoFKpoN1uY7vdnhfww3w+x3A4xGaz4d3quo5sNvuTTyaTXKTb7cJ13csCzWbzKKaqKj/zXC4HSZKO8iRcLpcxGAwwmUzC7UDTNBSLRSQSiVAeyUGNpM4v4XA4oNfr8eMMLJBKpWCaJn9fLBawLAur1Qq73Y6b/H0pyNyrTDYMA7PZDKPRCOv1+uQ3ZCqZe9UcOI6DTqfjW5zMbLVa3Bu6RaE9GI/HZ/P9fp8/qfipYROj+ukEnuQgEx0GImKGHGSC//UO/kTAibG+QwIfMQrUyeRXusaM94x3ERW2GT8Zn78EGACRmoKUJhB1TQAAAABJRU5ErkJggg=="></body></html>

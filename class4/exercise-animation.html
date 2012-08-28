@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)http://www.teaching-materials.org/javascript/exercises/animation.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Exercises: Animation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+  <style type="text/css">@media print { #feedlyMiniIcon { display: none; } }</style></head>
+ <body>
+<div class="container">
+<h2>Exercises: Animation</h2>
+
+
+<h3 class="page-header">The Cat Walk</h3>
+
+<p><em>Who needs Milan when you have JavaScript?</em></p>
+
+<ul>
+ <li>Start with this webpage, which has a single <code>img</code> tag of an animated GIF of a cat walking.
+ <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;title&gt;Cat Walk&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  
+  &lt;img style="position:absolute;" src="http://www.anniemation.com/clip_art/images/cat-walk.gif"&gt;
+  
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+ </li><li>Add a script tag at the bottom of the page, where you'll put all your code.
+ </li><li>Create a variable to store a reference to the <code>img</code>.
+ </li><li>Change the style of the <code>img</code> to have a "left" of "0px", so that it starts at the left hand of the screens.
+ </li><li>Create a function called <code>catWalk()</code> that moves the cat 10 pixels to the right of where it started, by
+ changing the "left" style property.
+ </li><li>Call that function every 50 milliseconds. Your cat should now be moving across the screen from left to right. Hurrah!
+ <br><br>
+ <button onclick="showSolution(1)" class="btn">See Solution</button>
+ <br><br>
+ <pre id="solution1" style="display:none;">var img = document.getElementsByTagName('img')[0];
+img.style.left = '0px';
+function catWalk() {
+  img.style.left = (parseInt(img.style.left) + 10) + 'px';
+}
+window.setInterval(catWalk, 50);
+</pre>
+
+
+ </li><li><b>Bonus #1</b>: When the cat reaches the right-hand of the screen, restart them at the left hand side ("0px"). So they should keep walking from left to right across the screen, forever and ever.
+ <br><br>
+ <button onclick="showSolution(2)" class="btn">See Solution</button>
+ <br><br>
+ <pre id="solution2" style="display:none;">var img = document.getElementsByTagName('img')[0];
+img.style.left = '0px';
+function catWalk() {
+  var currentLeft = parseInt(img.style.left);
+  img.style.left = (currentLeft + 10) + 'px';
+  if (currentLeft &gt; (window.innerWidth-img.width)) {
+    img.style.left = '0px';
+  }
+}
+window.setInterval(catWalk, 50);
+</pre>
+
+
+ </li><li><b>Bonus #2</b>: When the cat reaches the right-hand of the screen, make them move backwards instead. They should keep walking back and forth forever and ever.
+ <br><br>
+ <button onclick="showSolution(3)" class="btn">See Solution</button>
+ <br><br>
+ <pre id="solution3" style="display:none;">var img = document.getElementsByTagName('img')[0];
+img.style.left = '0px';
+var walkForwards = true;
+function catWalk() {
+  var currentLeft = parseInt(img.style.left);
+  
+  if (walkForwards &amp;&amp; (currentLeft &gt; (window.innerWidth-img.width))) {
+    walkForwards = false;
+  }
+  if (!walkForwards &amp;&amp; (currentLeft &lt;= 0)) {
+    walkForwards = true;
+  }
+  
+  if (walkForwards) {
+    img.style.left = (currentLeft + 10) + 'px';
+  } else {
+    img.style.left = (currentLeft - 10) + 'px';
+  }
+}
+window.setInterval(catWalk, 50);
+ </pre>
+
+ </li><li><b>Bonus #3</b>: When the cat reaches the middle of the screen, replace the img with an image of a cat dancing, keep it dancing for 10 seconds, and then replace the img with the original image and have it continue the walk.
+ </li></ul>
+ 
+ <br><br>
+
+
+ </div>
+
+  <br><br><br><br><br>
+
+  <script>
+function showSolution(num) {
+  if (confirm('You surrrrre?')) {
+    document.getElementById('solution' + num).style.display = 'block';
+  }
+}
+  </script>
+  
+<img id="feedlyMiniIcon" title="feedly mini" style="position: fixed; bottom: 14px; right: 14px; z-index: 99; cursor: pointer; border: 0px; -webkit-transition: opacity 0.3s ease; visibility: visible; width: 24px; height: 24px; max-height: 24px; max-width: 24px; overflow: hidden; display: block; padding: 0px; opacity: 0.35; " width="24" height="24" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYlJREFUeNrMVD1rwlAUPfkwBBxFKQQlDhmjqzj4F9w7FfwThZaW9n8UnDrrn1BEXNTBRQQhEE1ERRR0Sd990A7VaKJJ6YHzEu4N99z3zrsRGo2GAuCF8YFRQzSwGOuM7zJb3hgfES2o0SdGSWRLDfGhRgLpGAXS4q0VCoUCBEHwzd8skM/nUSqVoCjKybz8O1CtVn2LeZ4H27YxnU6xXC6x3+95PJPJoFKpoN1uY7vdnhfww3w+x3A4xGaz4d3quo5sNvuTTyaTXKTb7cJ13csCzWbzKKaqKj/zXC4HSZKO8iRcLpcxGAwwmUzC7UDTNBSLRSQSiVAeyUGNpM4v4XA4oNfr8eMMLJBKpWCaJn9fLBawLAur1Qq73Y6b/H0pyNyrTDYMA7PZDKPRCOv1+uQ3ZCqZe9UcOI6DTqfjW5zMbLVa3Bu6RaE9GI/HZ/P9fp8/qfipYROj+ukEnuQgEx0GImKGHGSC//UO/kTAibG+QwIfMQrUyeRXusaM94x3ERW2GT8Zn78EGACRmoKUJhB1TQAAAABJRU5ErkJggg=="></body></html>
